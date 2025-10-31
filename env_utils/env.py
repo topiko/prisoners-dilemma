@@ -12,6 +12,7 @@ from pettingzoo.utils.conversions import parallel_wrapper_fn
 # env = parallel_wrapper_fn(env)(**kwargs)
 from pettingzoo.utils.env import ActionType, AECEnv, AgentID, ObsType
 
+from env_utils.agents import JACK, JOY
 from env_utils.games import Prisoners_Dilemma
 
 
@@ -50,9 +51,8 @@ class PD(AECEnv):
         # none is last possible action, to satisfy discrete action space
         self._none = self.game.NONE
 
-        self.agents: list[str] = [f"player_{r}" for r in range(2)]
+        self.agents: list[str] = [JACK, JOY]
         self.possible_agents = self.agents[:]
-        self.agent_name_mapping = dict(zip(self.agents, list(range(self.num_agents))))
         self.action_spaces = {agent: Discrete(num_actions) for agent in self.agents}
         self.observation_spaces = {
             agent: Discrete(1 + num_actions) for agent in self.agents
